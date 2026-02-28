@@ -26,7 +26,7 @@ export const CounterPanel = ({maxValue, value, increment, reset, settingPanelAct
     return (
         <div className="panel-container">
             <div className='counter-display'>
-                <p>{value}</p>
+                <p className={value===maxValue?'red-input':''}>{value}</p>
             </div>
             <div className='buttons-container'>
             <Button disabled={value>=maxValue} onClick={incrementHandler} title={"inc"}/>

@@ -36,9 +36,17 @@ export const SetPanel = ({set, minValue, maxValue}: SetPanelPropsType) => {
     return (
         <div className="panel-container">
             <div className= 'counter-display'>
-                <span>max value</span><input type="number" value={maxValueDraft} step='1' onChange={onChangeSetMaxValueDraft} className={isWrong?'input-wrong':''}/>
-                <span>min value</span><input value={minValueDraft} type="number" step='1' className={isWrong?'input-wrong':''}
-            onChange={onChangeSetMinValueDraft}/>
+                <div className='input-container'>
+                    <span>max value</span><input type="number" value={maxValueDraft} step='1'
+                                                 onChange={onChangeSetMaxValueDraft}
+                                                 className={isWrong ? 'input-wrong' : ''}/>
+                </div>
+                <div className='input-container'>
+                    <span>min value</span><input value={minValueDraft} type="number" step='1'
+                                                 className={isWrong ? 'input-wrong' : ''}
+                                                 onChange={onChangeSetMinValueDraft}/>
+                </div>
+
             </div>
             <div className='buttons-container'>
                 <Button title={"set"} onClick={setHandler} disabled={isWrong}/>
