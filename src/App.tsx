@@ -1,34 +1,70 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import {useEffect, useState} from 'react'
+
+
 import './App.css'
+import {CounterPanel} from "./CounterPanel.tsx";
+import {SetPanel} from "./SetPanel.tsx";
+
 
 function App() {
-  const [count, setCount] = useState(0)
+
+
+  const [minValue, setMinValue] = useState(1);
+  const [maxValue, setMaxValue] = useState(5);
+  const [value, setValue] = useState(minValue)
+  const [isSetting, setIsSetting] = useState<boolean>(false);
+
+  useEffect(() => {
+      const minValueString = localStorage.getItem('minValue')
+      const maxValueString = localStorage.getItem('maxValue')
+      if (minValueString !== null) {
+          setMinValue(JSON.parse(minValueString))
+          setValue(JSON.parse(minValueString))
+      }
+      if(maxValueString !==null){
+          setMaxValue(JSON.parse(maxValueString))
+      }
+
+
+
+
+  },[])
+
+  const increment = () => {
+      if (value < maxValue) {
+          setValue(prev=> prev+1)
+      }
+
+  }
+
+  const reset = () => {
+      setValue(minValue)
+  }
+
+  const settingPanelActivate = () => {
+      setIsSetting(true);
+  }
+
+  const set =(minFromSetPanel: number, maxFromSetPanel: number) => {
+      setIsSetting(false)
+      setMinValue(minFromSetPanel)
+      localStorage.setItem('minValue', JSON.stringify(minFromSetPanel))
+      setMaxValue(maxFromSetPanel)
+      localStorage.setItem('maxValue', JSON.stringify(maxFromSetPanel))
+      setValue(minFromSetPanel)
+    }
+
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div>
+        {
+            isSetting ? <SetPanel set={set} minValue={minValue} maxValue={maxValue}/>
+                :<CounterPanel minValue={minValue}  maxValue={maxValue} value={value} increment={increment} reset={reset} settingPanelActivate={settingPanelActivate}/>
+
+        }
+
+
+    </div>
   )
 }
 
