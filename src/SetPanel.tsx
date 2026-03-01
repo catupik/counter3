@@ -20,14 +20,14 @@ export const SetPanel = ({set, minValue, maxValue}: SetPanelPropsType) => {
     const onChangeSetMinValueDraft = (e:ChangeEvent<HTMLInputElement>)=>{
         const value = +e.currentTarget.value
         setMinValueDraft(value)
-        const isWrong = value < 0 || value >= maxValueDraft
+        const isWrong = value < 0 || value >= maxValueDraft || maxValueDraft < 0
         setIsWrong(isWrong)
     }
 
     const onChangeSetMaxValueDraft = (e: ChangeEvent<HTMLInputElement>)=>{
         const value = +e.currentTarget.value
         setMaxValueDraft(value)
-        const isWrong = value < 0 || value <= minValueDraft
+        const isWrong = value < 0 || value <= minValueDraft || minValueDraft < 0
         setIsWrong(isWrong)
 
     }
